@@ -96,7 +96,7 @@ import { CopyClipboardDirective } from './copy-clipboard.directive';
                                 </div>
                             </div>
                             <div class="field grid">
-                                <span class="col-fixed font-bold" style="width:180px">Token damage:</span>
+                                <span class="col-fixed font-bold" style="width:180px">Bomb damage:</span>
                                 <div class="col">
                                     <span>{{raidData.bombDamage.toLocaleString()}}</span>
                                 </div>
