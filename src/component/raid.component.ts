@@ -26,7 +26,7 @@ import {RaidLoopComponent} from "./raid-loop.component";
             <div class="col-4">
                 <p-accordion [activeIndex]="0" *ngIf="raidData && memberData">
                     <ng-container *ngFor="let rd of raidData; index as i">
-                        <p-accordionTab [header]="(raidData.length - i) + '. forduló'">
+                        <p-accordionTab [header]="'Round ' + (raidData.length - i)">
                             <app-raid-loop [raidData]="rd" [memberData]="memberData"></app-raid-loop>
                         </p-accordionTab>
                     </ng-container>
