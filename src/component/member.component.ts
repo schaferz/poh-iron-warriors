@@ -12,8 +12,8 @@ import {ButtonModule} from "primeng/button";
     selector: "app-member",
     template: `
         <div class="pb-2">
-            <p-button label="Paste" icon="pi pi-clipboard" size="small" styleClass="mr-2" (onClick)="paste()" />
-            <p-button label="Clear" icon="pi pi-trash" size="small" (onClick)="this.membersJsonChange.emit('')" />
+            <p-button label="Paste" icon="pi pi-clipboard" size="small" styleClass="mr-2" (onClick)="paste()"/>
+            <p-button label="Clear" icon="pi pi-trash" size="small" (onClick)="this.membersJsonChange.emit('')"/>
         </div>
         <div class="grid">
             <div class="col-8">

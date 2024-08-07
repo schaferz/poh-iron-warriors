@@ -1,15 +1,29 @@
+/** Adatok a guild tagokról. */
 export interface MemberData {
-  list: string[];
-  map: Map<string, string>;
+    /** Tag név lista. */
+    list: string[];
+
+    /** Tag név - id map. */
+    map: Map<string, string>;
 }
 
+/** Tag raid adat. */
 export interface MemberRaidData {
-  tokens: number;
-  damage: number;
+    /** Használt raid token-ek. */
+    tokens: number;
+
+    /** Sebzés. */
+    damage: number;
 }
 
+/** Raid adat. */
 export interface RaidData {
-  battleDamage: number;
-  bombDamage: number;
-  map: Map<string, MemberRaidData>;
+    /** Támadásból okozott sebzés. */
+    battleDamage: number;
+
+    /** Bombával okozott sebzés. */
+    bombDamage: number;
+
+    /** Tag név - tag raid adat map. */
+    map: Map<string, MemberRaidData>;
 }

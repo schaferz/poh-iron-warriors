@@ -75,7 +75,7 @@ export class App {
     raidJson = '';
 
     /** A raid response-ból előállított infó. */
-    raidData?: RaidData;
+    raidData?: RaidData[];
 
     constructor() {
         this.onMembersJsonChange(JSON.stringify(members_response, null, 2));
@@ -105,10 +105,12 @@ export class App {
             this.raidData = this.appService.parseRaidJson(value);
             const memberIds: string[] = Array.from(this.memberData!.map.values());
 
-            this.raidData.map.forEach((value, memberId: any) => {
-                if (!memberIds.includes(memberId)) {
-                    throw Error('Missing member, ID: ' + memberId);
-                }
+            this.raidData.forEach(rd => {
+                rd.map.forEach((value, memberId: any) => {
+                    if (!memberIds.includes(memberId)) {
+                        throw Error('Missing member, ID: ' + memberId);
+                    }
+                });
             });
         } catch (e) {
             console.error(e);
@@ -121,4 +123,4 @@ export const appConfig: ApplicationConfig = {
     providers: [provideAnimations()],
 };
 
-bootstrapApplication(App);
+bootstrapApplication(App, appConfig);
