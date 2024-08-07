@@ -49,8 +49,6 @@ export class AppService {
       }
     });
 
-    console.log(result);
-
     return result;
   }
 
@@ -78,8 +76,6 @@ export class AppService {
       return;
     } else if (damageType !== 'Battle') {
       result.bombDamage += damageDealt;
-
-      return;
     }
 
     if (!result.map.has(userId)) {
@@ -90,6 +86,9 @@ export class AppService {
 
     memberData.tokens = memberData.tokens + 1;
     memberData.damage = memberData.damage + damageDealt;
-    result.battleDamage = result.battleDamage + damageDealt;
+
+    if (damageType === 'Battle') {
+      result.battleDamage = result.battleDamage + damageDealt;
+    }
   }
 }
