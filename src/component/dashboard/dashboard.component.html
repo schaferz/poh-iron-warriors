@@ -1,0 +1,10 @@
+<div style="max-width: 1400px; margin: auto;">
+    <p-selectButton
+            [(ngModel)]="calcType"
+            [options]="calcTypeOptions"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="mb-3"/>
+
+    <app-total-damage-chart [field]="calcType" [title]="calcLabel[calcType]"></app-total-damage-chart>
+</div>

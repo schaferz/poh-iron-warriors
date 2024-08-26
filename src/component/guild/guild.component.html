@@ -1,0 +1,34 @@
+<div class="mb-3">
+    <p-button (onClick)="dialogVisible = true" [disabled]="!loggedIn()" class="mr-2" icon="pi pi-refresh"
+              label="Update"/>
+</div>
+
+<p-table [value]="members" styleClass="p-datatable-sm p-datatable-striped w-full">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Role</th>
+            <th>User ID</th>
+        </tr>
+    </ng-template>
+    <ng-template let-member pTemplate="body">
+        <tr>
+            <td>{{ member.display_name }}</td>
+            <td>{{ member.level }}</td>
+            <td>{{ member.role }}</td>
+            <td>{{ member.user_id }}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="dialogVisible" [modal]="true" [style]="{ width: '50vw' }" header="Update guild data">
+    <div class="flex align-items-center mb-5">
+        <textarea [(ngModel)]="json" class="w-full" id="json" pInputTextarea rows="20">
+        </textarea>
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button (onClick)="cancel()" label="Cancel" severity="secondary"/>
+        <p-button (onClick)="save()" label="Save"/>
+    </div>
+</p-dialog>

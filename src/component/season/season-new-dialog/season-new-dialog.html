@@ -1,0 +1,23 @@
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" header="New season">
+    <div class="flex align-items-center mb-5">
+        <p-pickList
+                [dragdrop]="true"
+                [responsive]="true"
+                [sourceStyle]="{ height: '30rem' }"
+                [source]="sourceBosses"
+                [targetStyle]="{ height: '30rem' }"
+                [target]="targetBosses"
+                breakpoint="1400px"
+                class="w-full"
+                sourceHeader="Available"
+                targetHeader="Selected">
+            <ng-template let-boss pTemplate="item">
+                <p>{{ boss.name }}</p>
+            </ng-template>
+        </p-pickList>
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button (onClick)="cancel()" label="Cancel" severity="secondary"/>
+        <p-button (onClick)="save()" label="Save"/>
+    </div>
+</p-dialog>

@@ -1,0 +1,30 @@
+<p-table [tableStyle]="{ 'min-width': '50rem' }" [value]="data" dataKey="id">
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            <p-button (onClick)="onInsert()" [disabled]="!loggedIn()" icon="pi pi-plus" label="New" size="small"
+                      title="Add boss" type="button">
+            </p-button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 100%">Boss name</th>
+            <th style="width: 5rem"></th>
+        </tr>
+    </ng-template>
+    <ng-template let-boss let-editing="editing" pTemplate="body">
+        <tr>
+            <td *ngIf="!loggedIn()">
+                {{ boss.name }}
+            </td>
+            <td *ngIf="loggedIn()">
+                <input (blur)="onChange(boss)" [(ngModel)]="boss.name" pInputText type="text"/>
+            </td>
+            <td>
+                <button (click)="onDelete($event, boss)" [disabled]="!loggedIn()" icon="pi pi-trash" pButton severity="danger" size="small"
+                        title="Delete boss" type="button">
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

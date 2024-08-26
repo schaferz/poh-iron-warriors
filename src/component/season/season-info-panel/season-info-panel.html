@@ -1,0 +1,39 @@
+<p-tabView *ngIf="data" styleClass="text-sm">
+    <p-tabPanel *ngFor="let tab of tabs" [header]="tab.header">
+        <p-selectButton
+                [(ngModel)]="calcType"
+                [options]="calcTypeOptions"
+                optionLabel="label"
+                optionValue="value"
+                styleClass="mb-3"/>
+
+        <p-table [columns]="columns.tableColumns" [scrollable]="true" [value]="rows[tab.name]" scrollHeight="55vh"
+                 styleClass="p-datatable-striped p-datatable-sm text-sm">
+            <ng-template let-columns pTemplate="header">
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.name">
+                        {{ resolveColumnLabel(col) }}
+                        <p-sortIcon [field]="col.name"/>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template let-columns="columns" let-rowData pTemplate="body">
+                <tr>
+                    <td *ngFor="let col of columns">
+                        {{ resolveCellValue(col, rowData) }}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <tr>
+                    <td *ngFor="let col of columns.tableColumns">
+                        <span>{{ resolveCellValue(col, rows[tab.name + 'Sum']) }}</span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+</p-tabView>
+
+
+

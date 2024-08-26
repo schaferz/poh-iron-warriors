@@ -1,0 +1,14 @@
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" header="New season">
+    <div class="field grid">
+        <p-dropdown [(ngModel)]="boss" [options]="bosses" optionLabel="name"
+                    placeholder="Select a Boss"/>
+    </div>
+    <div class="field grid">
+        <textarea [(ngModel)]="json" class="w-full" pInputTextarea rows="20"></textarea>
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+        <p-button (onClick)="cancel()" label="Cancel" severity="secondary"/>
+        <p-button (onClick)="save()" label="Save"/>
+    </div>
+</p-dialog>

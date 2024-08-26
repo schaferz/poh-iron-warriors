@@ -1,0 +1,41 @@
+<div class="min-h-screen flex relative lg:static surface-ground">
+    <ng-container *ngIf="url !== '/login'">
+        <app-sidebar></app-sidebar>
+        <div class="min-h-screen flex flex-column relative flex-auto">
+            <div class="flex justify-content-between align-items-center px-5 surface-0 border-bottom-1 surface-border relative lg:static"
+                 style="height: 60px;">
+                <div class="flex">
+                    <!-- Right side -->
+                    <span>{{ data?.title }}</span>
+                </div>
+                <ul class="list-none p-0 m-0 hidden lg:flex lg:align-items-center select-none lg:flex-row surface-section border-1 lg:border-none surface-border right-0 top-100 z-1 shadow-2 lg:shadow-none absolute lg:static">
+                    <li *ngIf="!supabaseService.loggedIn()" title="Sign in">
+                        <a class="p-ripple p-element flex p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer no-underline"
+                           routerLink="/login">
+                            <i class="pi pi-sign-in text-base lg:text-2xl mr-2 lg:mr-0"></i>
+                        </a>
+                    </li>
+                    <li *ngIf="supabaseService.loggedIn()" title="Sign out">
+                        <a (click)="logout()"
+                           class="p-ripple p-element flex p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer no-underline">
+                            <i class="pi pi-sign-out text-base lg:text-2xl mr-2 lg:mr-0"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-5 flex flex-column flex-auto">
+                <div class="border-2 p-5 surface-border border-round surface-section flex-auto overflow-auto"
+                     style="max-height: 85vh">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="url === '/login'">
+        <router-outlet></router-outlet>
+    </ng-container>
+</div>
+
+<p-toast/>
+<p-confirmPopup/>
+<app-loading-indicator/>

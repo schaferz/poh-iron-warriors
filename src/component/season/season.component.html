@@ -1,0 +1,12 @@
+<div class="mb-3">
+    <p-button (onClick)="showNewDialog($event)" [disabled]="!loggedIn()" class="mr-2" icon="pi pi-play"
+              label="New season"/>
+
+    <p-button (onClick)="showUpdateDialog()" [disabled]="!loggedIn()" class="mr-2" icon="pi pi-refresh"
+              label="Update season"/>
+</div>
+
+<app-season-info-panel></app-season-info-panel>
+
+<app-season-new-dialog></app-season-new-dialog>
+<app-season-update-dialog (updated)="onRaidDataUpdated()"></app-season-update-dialog>
