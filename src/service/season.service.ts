@@ -40,6 +40,16 @@ export class SeasonService {
             );
     }
 
+    updateSeasonRaidSetData(bossId: number, set: any): Observable<unknown> {
+        const params = {boss_id: bossId, payload: set};
+        const query = this.service.rpc('update_current_raid_set', params);
+
+        return this.service.handleDataResponse(from(query))
+            .pipe(
+                tap(() => this.clearCache())
+            );
+    }
+
     loadRaidSeasonContribution(seasonId?: number): Observable<RaidSeasonContribution[]> {
         const params: any = {};
 

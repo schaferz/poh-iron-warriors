@@ -54,19 +54,7 @@ export class SeasonUpdateDialog implements OnInit {
             return;
         }
 
-        let sets;
-
-        try {
-            const raidObj = JSON.parse(this.json);
-
-            sets = raidObj.eventResults[0].eventResponseData.sets;
-        } catch (e) {
-            console.error(e);
-            this.showError("Invalid raid json", `${e}`);
-            return;
-        }
-
-        this.seasonService.updateSeasonRaidData(this.boss.id, sets).subscribe(() => {
+        const onSuccess = () => {
             this.messageService.add({
                 severity: 'success',
                 summary: "Raid data",
@@ -76,7 +64,25 @@ export class SeasonUpdateDialog implements OnInit {
             this.visible = false;
             this.updated.emit();
             this.reset();
-        });
+        };
+
+        try {
+            const raidObj = JSON.parse(this.json);
+            const respData = raidObj.eventResults[0].eventResponseData;
+
+            if (respData.sets) {
+                this.seasonService.updateSeasonRaidData(this.boss.id, respData.sets).subscribe(() => onSuccess());
+            } else if (respData.guild) {
+                const {guildBossGameMode} = respData.extension;
+                const {currentSet} = guildBossGameMode;
+
+                this.seasonService.updateSeasonRaidSetData(this.boss.id, currentSet);
+            }
+        } catch (e) {
+            console.error(e);
+            this.showError("Invalid raid json", `${e}`);
+            return;
+        }
     }
 
     cancel() {
