@@ -1,6 +1,7 @@
 import {Component, inject, OnInit} from "@angular/core";
 import {SeasonService} from "../../../service";
 import {RaidSeasonData, SeasonInfoRounds, SeasonInfoTableColumns, SeasonInfoTableRow} from "../../../model";
+import {orderChartData} from "../../../util";
 
 @Component({
     template: ""
@@ -56,12 +57,13 @@ export abstract class ChartComponent implements OnInit {
     }
 
     applySimpleChartData(title: string, labels: string[], data: number[]): any {
+        const ordered = orderChartData(labels, data);
         const datasets: any[] = [{
             label: title,
-            data,
+            data: ordered.data,
             backgroundColor: "#157ffd"
         }];
 
-        this.chartData = {datasets, labels};
+        this.chartData = {datasets, labels: ordered.labels};
     }
 }
