@@ -31,7 +31,8 @@
                 "glob": "_redirects",
                 "input": "src",
                 "output": "/"
-              }
+              },
+              "src/favicon.ico"
             ],
             "index": "src/index.html",
             "browser": "src/main.ts",
