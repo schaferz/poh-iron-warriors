@@ -1,10 +1,15 @@
 <div style="max-width: 1400px; margin: auto;">
-    <p-selectButton
-            [(ngModel)]="calcType"
-            [options]="calcTypeOptions"
-            optionLabel="label"
-            optionValue="value"
-            styleClass="mb-3"/>
+    <ng-container *ngIf="loaded">
+        <p-selectButton
+                [(ngModel)]="calcType"
+                [options]="calcTypeOptions"
+                optionLabel="label"
+                optionValue="value"
+                styleClass="mb-3"/>
 
-    <app-total-damage-chart [field]="calcType" [title]="calcLabel[calcType]"></app-total-damage-chart>
+        <app-total-damage-chart [field]="calcType" [title]="calcLabel[calcType]"></app-total-damage-chart>
+    </ng-container>
+    <div *ngIf="!loaded" class="w-full text-center pt-8">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
 </div>
