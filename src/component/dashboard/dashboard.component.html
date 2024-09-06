@@ -7,7 +7,7 @@
                 optionValue="value"
                 styleClass="mb-3"/>
 
-        <app-total-damage-chart [field]="calcType" [title]="calcLabel[calcType]"></app-total-damage-chart>
+        <app-field-chart [field]="calcType" [title]="calcLabel[calcType]"></app-field-chart>
     </ng-container>
     <div *ngIf="!loaded" class="w-full text-center pt-8">
         <p-progressSpinner></p-progressSpinner>

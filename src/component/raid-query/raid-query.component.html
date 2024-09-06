@@ -1,0 +1,16 @@
+<ng-container *ngIf="members">
+    <app-raid-query-search (bossChange)="onBossChange($event)" (contributionChange)="onContributionsChange($event)">
+    </app-raid-query-search>
+
+    <div *ngIf="contributions" style="max-width: 1400px; margin: auto;">
+        <p-selectButton
+                [(ngModel)]="calcType"
+                (ngModelChange)="updateChartData()"
+                [options]="calcTypeOptions"
+                optionLabel="label"
+                optionValue="value"
+                styleClass="mb-3"/>
+
+        <p-chart type="bar" [data]="data" [options]="chartOptions"/>
+    </div>
+</ng-container>

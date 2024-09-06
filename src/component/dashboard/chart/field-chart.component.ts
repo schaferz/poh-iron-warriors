@@ -3,7 +3,7 @@ import {ChartComponent} from "./chart.component";
 import {ChartModule} from "primeng/chart";
 
 @Component({
-    selector: "app-total-damage-chart",
+    selector: "app-field-chart",
     imports: [ChartModule],
     template: `
         <p-chart type="bar" [data]="chartData" [options]="chartOptions"/>
@@ -36,7 +36,6 @@ export class FieldChartComponent extends ChartComponent implements OnInit, OnCha
             }
 
             this.applySimpleChartData(this.title, labels, data);
-            console.log(this.rows);
         }
     }
 }

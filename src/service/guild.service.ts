@@ -1,6 +1,6 @@
 import {inject, Injectable} from "@angular/core";
 import {SupabaseService} from "./supabase.service";
-import {from, Observable, shareReplay, Subject, takeUntil, tap} from "rxjs";
+import {from, map, Observable, shareReplay, Subject, takeUntil, tap} from "rxjs";
 import {Member} from "../model";
 
 @Injectable({
@@ -10,26 +10,41 @@ export class GuildService {
 
     service = inject(SupabaseService);
 
-    private memberReload$ = new Subject();
+    private activeMemberReload$ = new Subject();
 
-    private memberCache$?: Observable<Member[]>;
+    private activeMemberCache$?: Observable<Member[]>;
+
+    private allMemberReload$ = new Subject();
+
+    private allMemberCache$?: Observable<Member[]>;
 
     activeMembers(): Observable<Member[]> {
-        if (!this.memberCache$) {
-            this.memberCache$ = this.listActiceMembers().pipe(
-                takeUntil(this.memberReload$),
+        if (!this.activeMemberCache$) {
+            this.activeMemberCache$ = this.allMembers().pipe(
+                map(ml => ml.filter(m => m.active)),
+                takeUntil(this.activeMemberReload$),
                 shareReplay(1)
             )
         }
 
-        return this.memberCache$;
+        return this.activeMemberCache$;
     }
 
-    listActiceMembers(): Observable<Member[]> {
+    allMembers(): Observable<Member[]> {
+        if (!this.allMemberCache$) {
+            this.allMemberCache$ = this.listAllMembers().pipe(
+                takeUntil(this.allMemberReload$),
+                shareReplay(1)
+            )
+        }
+
+        return this.allMemberCache$;
+    }
+
+    listAllMembers(): Observable<Member[]> {
         const query = this.service
             .from("member")
             .select("*")
-            .eq("active", true)
             .order("display_name");
 
         return this.service.handleDataResponse(from(query));
@@ -39,8 +54,11 @@ export class GuildService {
         const query = this.service.rpc('update_members', {payload: members});
 
         return this.service.handleDataResponse(from(query)).pipe(tap(() => {
-            this.memberReload$.next(undefined);
-            this.memberCache$ = undefined;
+            this.allMemberReload$.next(undefined);
+            this.allMemberCache$ = undefined;
+
+            this.activeMemberReload$.next(undefined);
+            this.activeMemberCache$ = undefined;
         }));
     }
 }

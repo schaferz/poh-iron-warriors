@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from "@angular/core";
 import {SeasonService} from "../../../service";
 import {RaidSeasonData, SeasonInfoRounds, SeasonInfoTableColumns, SeasonInfoTableRow} from "../../../model";
-import {orderChartData} from "../../../util";
+import {DEFAULT_CHART_OPTIONS, orderChartData} from "../../../util";
 
 @Component({
     template: ""
@@ -39,21 +39,7 @@ export abstract class ChartComponent implements OnInit {
     }
 
     applyDefaultChartOptions(): any {
-        this.chartOptions = {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawBorder: false
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    }
-                }
-            }
-        };
+        this.chartOptions = DEFAULT_CHART_OPTIONS;
     }
 
     applySimpleChartData(title: string, labels: string[], data: number[]): any {

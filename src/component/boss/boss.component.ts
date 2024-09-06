@@ -37,7 +37,7 @@ export class BossComponent implements OnInit {
     }
 
     onInsert(): void {
-        this.data = [...[{name: ""}], ...this.data];
+        this.data = [...[{name: "", side1: "", side2: ""}], ...this.data];
     }
 
     onChange(boss: Boss): void {
@@ -56,6 +56,13 @@ export class BossComponent implements OnInit {
     }
 
     onDelete(event: MouseEvent, boss: Boss): void {
+        if (boss.id === undefined) {
+            const index = this.data.indexOf(boss);
+            this.data = [...this.data.slice(0, index), ...this.data.slice(index + 1)];
+
+            return;
+        }
+
         this.confirmationService.confirm({
             target: event.target as EventTarget,
             message: 'Are you sure you want delete the boss?',

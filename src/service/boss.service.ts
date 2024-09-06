@@ -28,7 +28,7 @@ export class BossService {
     listBosses(): Observable<Boss[]> {
         const query = this.service
             .from('boss')
-            .select(`id, name`);
+            .select(`id, name, side1, side2`);
 
         return this.service.handleDataResponse(from(query));
     }
@@ -36,7 +36,7 @@ export class BossService {
     getBossByName(name: string): Observable<Boss> {
         const query = this.service
             .from('boss')
-            .select(`id, name`)
+            .select(`id, name, side1, side2`)
             .eq('name', name)
             .single();
 
@@ -46,7 +46,7 @@ export class BossService {
     getBossById(id: number): Observable<Boss> {
         const query = this.service
             .from('boss')
-            .select(`id, name`)
+            .select(`id, name, side1, side2`)
             .eq('id', id)
             .single();
 

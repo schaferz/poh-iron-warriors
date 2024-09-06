@@ -6,6 +6,7 @@ export interface RaidSeasonContribution {
     user_id: string;
     damage_type: string;
     damage_dealt: number;
+    encounter_id: number;
 }
 
 export interface RaidSeasonBossDataHolder {
