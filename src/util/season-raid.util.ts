@@ -35,8 +35,10 @@ function applaySetData(data: RaidSeasonData, contribution: RaidSeasonContributio
 
     const set = sets[loop_index];
 
-    applyDamageAndTokenData(set, damage_type, damage_dealt);
-    applayBossData(set, contribution);
+    if (set) {
+        applyDamageAndTokenData(set, damage_type, damage_dealt);
+        applayBossData(set, contribution);
+    }
 }
 
 function applayBossData(bossHolder: RaidSeasonBossDataHolder, contribution: RaidSeasonContribution): void {
@@ -69,7 +71,7 @@ function applayUserData(bossData: RaidSeasonBossData, contribution: RaidSeasonCo
 }
 
 function applyDamageAndTokenData(target: any, damageType: string, damageDealt: number) {
-    if (damageDealt) {
+    if (target && damageDealt) {
         if (damageType === "Battle") {
             target.damage += damageDealt;
             target.tokenUsage += 1;
