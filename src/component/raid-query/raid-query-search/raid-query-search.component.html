@@ -1,7 +1,7 @@
 <div class="formgroup-inline" *ngIf="seasons && bosses">
     <div class="field">
         <label for="seasonId">Season</label>
-        <p-dropdown id="seasonId" [(ngModel)]="seasonId" [options]="seasons" optionLabel="season" optionValue="id"/>
+        <p-dropdown id="seasonId" [(ngModel)]="seasonId" (ngModelChange)="onSeasonChange()" [options]="seasons" optionLabel="season" optionValue="id"/>
     </div>
     <div class="field">
         <label for="boss">Boss</label>

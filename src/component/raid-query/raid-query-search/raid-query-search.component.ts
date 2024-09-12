@@ -34,10 +34,10 @@ export class RaidQuerySearchComponent implements OnInit {
 
     ngOnInit() {
         this.seasonService.loadSeasons()
-            .subscribe(s => this.onSeasonLoaded(s));
+            .subscribe(s => this.onSeasonsLoaded(s));
     }
 
-    onSeasonLoaded(seasons: Season[]): void {
+    onSeasonsLoaded(seasons: Season[]): void {
         this.seasons = seasons;
         if (seasons && seasons.length > 0) {
             this.seasonId = seasons[0].id;
@@ -70,6 +70,13 @@ export class RaidQuerySearchComponent implements OnInit {
         } else {
             this.bosses = undefined;
         }
+    }
+
+    onSeasonChange(): void {
+        this.boss = undefined;
+        this.bossChange.emit(this.boss);
+        this.contributionChange.emit(undefined);
+        this.loadBosses();
     }
 
     onBossChange(boss: Boss): void {

@@ -8,6 +8,7 @@ import {BossService, SeasonService} from "../../../service";
 import {MessageService} from "primeng/api";
 import {DropdownModule} from "primeng/dropdown";
 import {Boss} from "../../../model";
+import {map, switchMap} from "rxjs";
 
 @Component({
     selector: "app-season-update-dialog",
@@ -36,7 +37,23 @@ export class SeasonUpdateDialog implements OnInit {
     json?: string;
 
     ngOnInit() {
-        this.bossService.bosses().subscribe((r) => this.bosses = r);
+        this.bossService.bosses().pipe(
+            switchMap(rs => {
+                return this.seasonService.loadSeasonBossOrder().pipe(
+                    map(ids => {
+                        return ids.map(id => {
+                            const boss = rs.find(boss => boss.id === id);
+
+                            if (!boss) {
+                                throw Error(`Boss not found: ${id}`);
+                            }
+
+                            return boss;
+                        });
+                    })
+                );
+            }),
+        ).subscribe((r) => this.bosses = r);
     }
 
     show() {
