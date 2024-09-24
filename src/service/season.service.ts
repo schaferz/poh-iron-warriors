@@ -1,6 +1,6 @@
 import {inject, Injectable} from "@angular/core";
 import {SupabaseService} from "./supabase.service";
-import {Boss, RaidSeasonContribution, RaidSeasonData, Season} from "../model";
+import {Boss, RaidSeasonContribution, RaidSeasonData, RaidSeasonProgress, Season} from "../model";
 import {combineLatest, from, map, Observable, shareReplay, Subject, switchMap, takeUntil, tap} from "rxjs";
 import {createRaidSeasonData, createTableData} from "../util";
 import {GuildService} from "./guild.service";
@@ -129,6 +129,12 @@ export class SeasonService {
         }
 
         return this.currentSeasonDataCache$;
+    }
+
+    raidSeasonProgress() : Observable<RaidSeasonProgress[]> {
+        const query = this.service.rpc('raid_season_progress', {});
+
+        return this.service.handleDataResponse(from(query));
     }
 
     private clearCache() {

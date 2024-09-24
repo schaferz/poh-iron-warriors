@@ -1,0 +1,20 @@
+<ng-container *ngIf="members && data">
+    <p-multiSelect
+            [options]="members"
+            [(ngModel)]="selectedMembers"
+            (ngModelChange)="onSelectedMembersChange($event)"
+            optionLabel="display_name"
+            placeholder="Select Members"/>
+
+    <div *ngIf="chartData" style="max-width: 1200px; margin: 10px auto;">
+        <p-selectButton
+                [(ngModel)]="calcType"
+                (ngModelChange)="updateChartData()"
+                [options]="calcTypeOptions"
+                optionLabel="label"
+                optionValue="value"
+                styleClass="mb-3"/>
+
+        <p-chart type="line" [data]="chartData" [options]="chartOptions"/>
+    </div>
+</ng-container>

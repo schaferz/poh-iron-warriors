@@ -42,3 +42,15 @@ export interface RaidSeasonUserData {
     bombDamage: number;
     tokenUsage: number;
 }
+
+export interface RaidSeasonProgress {
+    season: number;
+    usr_id: string;
+    display_name: string;
+    avg_damage: number;
+    total_damage: number;
+    token_usage: number;
+    token_usage_percent: number;
+    total_damage_percent: number;
+    avg_damage_percent: number;
+}

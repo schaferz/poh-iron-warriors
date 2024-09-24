@@ -4,7 +4,8 @@ import {
     GuildComponent,
     LoginComponent,
     RaidQueryComponent,
-    SeasonComponent
+    SeasonComponent,
+    RaidProgressComponent
 } from "./component";
 import {Route} from "@angular/router";
 
@@ -15,5 +16,6 @@ export const routes: Route[] = [
     {path: 'boss', component: BossComponent, data: {title: 'Raid / Boss'}},
     {path: 'season', component: SeasonComponent, data: {title: 'Raid / Season'}},
     {path: 'query', component: RaidQueryComponent, data: {title: 'Raid / Query'}},
+    {path: 'progress', component: RaidProgressComponent, data: {title: 'Raid / Progress'}},
     {path: 'login', component: LoginComponent, data: {title: 'Login'}},
 ];

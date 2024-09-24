@@ -26,3 +26,11 @@ export function orderChartData(labels: string[], data: number[]): { labels: stri
         data: labelData.map(e => e.value),
     };
 }
+
+export function randomChartColor() {
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+
+    return "rgb(" + r + "," + g + "," + b + ")";
+}

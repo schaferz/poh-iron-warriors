@@ -51,6 +51,12 @@
                                 <span>Query</span>
                             </a>
                         </li>
+                        <li (click)="navigateTo('/progress')" [class.active]="url === '/progress'">
+                            <a class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100">
+                                <i class="pi pi-chart-line mr-2"></i>
+                                <span>Progress</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
