@@ -13,7 +13,7 @@
                 <tr>
                     <th *ngFor="let col of columns" [pSortableColumn]="resolveSortColumn(col)">
                         {{ resolveColumnLabel(col) }}
-                        <p-sortIcon [field]="col.name"/>
+                        <p-sortIcon [field]="resolveSortColumn(col)"/>
                     </th>
                 </tr>
             </ng-template>
