@@ -62,6 +62,14 @@ export class SeasonInfoPanel implements OnInit {
         return column.header;
     }
 
+    resolveSortColumn(column: any): string {
+        if (column.name === 'calc') {
+            return this.calcType;
+        }
+
+        return column.name;
+    }
+
     resolveCellValue(column: any, row: any): string {
         let value = row[column.name];
 

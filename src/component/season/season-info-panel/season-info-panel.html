@@ -11,7 +11,7 @@
                  styleClass="p-datatable-striped p-datatable-sm text-sm">
             <ng-template let-columns pTemplate="header">
                 <tr>
-                    <th *ngFor="let col of columns" [pSortableColumn]="col.name">
+                    <th *ngFor="let col of columns" [pSortableColumn]="resolveSortColumn(col)">
                         {{ resolveColumnLabel(col) }}
                         <p-sortIcon [field]="col.name"/>
                     </th>
