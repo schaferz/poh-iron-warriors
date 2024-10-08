@@ -11,9 +11,9 @@
                  styleClass="p-datatable-striped p-datatable-sm text-sm">
             <ng-template let-columns pTemplate="header">
                 <tr>
-                    <th *ngFor="let col of columns" [pSortableColumn]="resolveSortColumn(col)">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.name" [pSortableColumnDisabled]="col.name === 'calc'">
                         {{ resolveColumnLabel(col) }}
-                        <p-sortIcon [field]="resolveSortColumn(col)"/>
+                        <p-sortIcon *ngIf="col.name != 'calc'" [field]="col.name"/>
                     </th>
                 </tr>
             </ng-template>
