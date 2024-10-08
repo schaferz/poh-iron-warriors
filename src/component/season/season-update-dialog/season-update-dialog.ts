@@ -93,7 +93,7 @@ export class SeasonUpdateDialog implements OnInit {
                 const {guildBossGameMode} = respData.extension;
                 const {currentSet} = guildBossGameMode;
 
-                this.seasonService.updateSeasonRaidSetData(this.boss.id, currentSet);
+                this.seasonService.updateSeasonRaidSetData(this.boss.id, currentSet).subscribe(() => onSuccess());
             }
         } catch (e) {
             console.error(e);
