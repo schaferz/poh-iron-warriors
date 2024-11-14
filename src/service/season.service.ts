@@ -1,7 +1,7 @@
 import {inject, Injectable} from "@angular/core";
 import {SupabaseService} from "./supabase.service";
-import {Boss, RaidSeasonContribution, RaidSeasonData, RaidSeasonProgress, Season} from "../model";
-import {combineLatest, from, map, Observable, shareReplay, Subject, switchMap, takeUntil, tap} from "rxjs";
+import {Boss, ExtraTokenUsage, RaidSeasonContribution, RaidSeasonData, RaidSeasonProgress, Season} from "../model";
+import {combineLatest, from, map, Observable, of, shareReplay, Subject, switchMap, takeUntil, tap} from "rxjs";
 import {createRaidSeasonData, createTableData} from "../util";
 import {GuildService} from "./guild.service";
 import {BossService} from "./boss.service";
@@ -135,6 +135,32 @@ export class SeasonService {
         const query = this.service.rpc('raid_season_progress', {});
 
         return this.service.handleDataResponse(from(query));
+    }
+
+    listExtraTokenUsage(): Observable<ExtraTokenUsage[]> {
+        const query = this.service.rpc('raid_season_extra_token', {});
+
+        return  this.service.handleDataResponse(from(query));
+    }
+
+    getExtraTokenUsageMap(): Observable<Map<string, number>> {
+        return this.listExtraTokenUsage().pipe(
+            map(r => {
+                const map: Map<string, number> = new Map();
+
+                r.forEach((i: any) => map.set(i.user_id, i.count));
+
+                return map;
+            })
+        );
+    }
+
+    upsertExtraToken(data: ExtraTokenUsage[]) {
+        const query = this.service
+            .from('extra_token_usage')
+            .upsert(data, {onConflict: 'season_id,user_id'});
+
+        return this.service.handleActionResponse(from(query));
     }
 
     private clearCache() {

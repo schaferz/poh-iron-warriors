@@ -1,0 +1,30 @@
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" header="Extra token usage">
+    <ng-container *ngIf="extraTokenUsage && members">
+        <div class="flex align-items-center mb-5">
+            <p-table [value]="extraTokenUsage">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Name</th>
+                        <th>Count</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{ resolveName(item.user_id) }}</td>
+                        <td>{{ item.count }}</td>
+                        <td>
+                            <p-button (onClick)="dec(item)" title="Decrese" icon="pi pi-minus" size="small"
+                                      styleClass="mr-2"/>
+                            <p-button (onClick)="inc(item)" title="Increse" icon="pi pi-plus" size="small"/>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="flex justify-content-end gap-2">
+            <p-button (onClick)="cancel()" label="Cancel" severity="secondary"/>
+            <p-button (onClick)="save()" label="Save"/>
+        </div>
+    </ng-container>
+</p-dialog>

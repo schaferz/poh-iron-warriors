@@ -4,9 +4,13 @@
 
     <p-button (onClick)="showUpdateDialog()" [disabled]="!loggedIn()" class="mr-2" icon="pi pi-refresh"
               label="Update season"/>
+
+    <p-button (onClick)="showExtraTokenDialog()" [disabled]="!loggedIn()" class="mr-2" icon="pi pi-plus"
+              label="Extra token"/>
 </div>
 
 <app-season-info-panel></app-season-info-panel>
 
 <app-season-new-dialog></app-season-new-dialog>
 <app-season-update-dialog (updated)="onRaidDataUpdated()"></app-season-update-dialog>
+<app-season-extra-token-dialog></app-season-extra-token-dialog>

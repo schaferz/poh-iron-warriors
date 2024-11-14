@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from "@angular/core";
 import {ChartComponent} from "./chart.component";
 import {ChartModule} from "primeng/chart";
+import {SeasonInfoTableCalcType} from "../../../model";
 
 @Component({
     selector: "app-field-chart",
@@ -29,10 +30,21 @@ export class FieldChartComponent extends ChartComponent implements OnInit, OnCha
             const total = this.rows['total'];
 
             for (const row of total) {
-                const {member} = row;
+                const {member, user_id} = row;
+                let value = row[this.field];
+
+                if (this.field === SeasonInfoTableCalcType.totalToken) {
+                    const et = this.extraToken.get(user_id);
+
+                    if (et) {
+                        value += et;
+                    }
+
+                    console.log(`${member}: ${et}`);
+                }
 
                 labels.push(member);
-                data.push(row[this.field]);
+                data.push(value);
             }
 
             this.applySimpleChartData(this.title, labels, data);

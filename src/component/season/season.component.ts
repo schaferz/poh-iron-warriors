@@ -6,12 +6,13 @@ import {SupabaseService} from "../../service";
 import {ConfirmationService} from "primeng/api";
 import {SeasonUpdateDialog} from "./season-update-dialog/season-update-dialog";
 import {SeasonInfoPanel} from "./season-info-panel/season-info-panel";
+import {SeasonExtraTokenDialog} from "./season-extra-token-dialog/season-extra-token-dialog";
 
 @Component({
     selector: "app-season",
     templateUrl: "./season.component.html",
     standalone: true,
-    imports: [ButtonModule, TabViewModule, SeasonNewDialog, SeasonUpdateDialog, SeasonInfoPanel]
+    imports: [ButtonModule, TabViewModule, SeasonNewDialog, SeasonUpdateDialog, SeasonExtraTokenDialog, SeasonInfoPanel]
 })
 export class SeasonComponent {
 
@@ -23,6 +24,9 @@ export class SeasonComponent {
 
     @ViewChild(SeasonNewDialog)
     newDialog?: SeasonNewDialog;
+
+    @ViewChild(SeasonExtraTokenDialog)
+    extraTokenDialog?: SeasonExtraTokenDialog;
 
     @ViewChild(SeasonUpdateDialog)
     updateDialog?: SeasonUpdateDialog;
@@ -43,6 +47,10 @@ export class SeasonComponent {
 
     showUpdateDialog() {
         this.updateDialog?.show();
+    }
+
+    showExtraTokenDialog() {
+        this.extraTokenDialog?.show();
     }
 
     onRaidDataUpdated() {

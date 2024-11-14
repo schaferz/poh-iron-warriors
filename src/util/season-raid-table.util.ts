@@ -67,7 +67,7 @@ export function createTableLoopData(data: RaidSeasonData, members: Member[], loo
     const result: any[] = [];
 
     for (const member of members) {
-        const row: any = {member: member.display_name};
+        const row: any = {member: member.display_name, user_id: member.user_id};
 
         result.push(row);
 

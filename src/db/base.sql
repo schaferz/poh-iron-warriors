@@ -21,6 +21,9 @@ VALUES ('Avatar of Khaine'),
        ('Szarekh'),
        ('Tervigon');
 
+INSERT INTO boss (name)
+VALUES ('Szarekh II');
+
 UPDATE boss SET side1 = 'Aethana', side2 = 'Eldryon' WHERE name = 'Avatar of Khaine';
 UPDATE boss SET side1 = 'Gibbascrapz', side2 = 'Tanksmasha' WHERE name = 'Ghazghkull';
 UPDATE boss SET side1 = 'Alpha Prime', side2 = 'Omega Prime' WHERE name = 'Hive Tyrant';
@@ -131,6 +134,18 @@ ALTER TABLE battle_contributions
     DROP COLUMN started_on;
 ALTER TABLE battle_contributions
     DROP COLUMN completed_on;
+
+-- extra_token_usage
+CREATE TABLE extra_token_usage
+(
+    id        SERIAL PRIMARY KEY,
+    season_id INT REFERENCES season (id)               NOT NULL,
+    user_id   VARCHAR(100) REFERENCES member (user_id) NOT NULL
+);
+
+ALTER TABLE extra_token_usage ADD COLUMN count INT;
+CREATE INDEX idx_extra_token_usage_season_id ON extra_token_usage(season_id);
+CREATE UNIQUE INDEX extra_token_usage_idx on extra_token_usage (season_id, user_id);
 
 -- member update
 CREATE OR REPLACE FUNCTION public.update_members(payload json) RETURNS SETOF public.member AS
@@ -438,6 +453,45 @@ BEGIN
 
     RETURN QUERY
         SELECT sbo.boss_id FROM public.season_boss_order sbo WHERE sbo.season_id = sid ORDER BY sbo.index ASC;
+END
+$BODY$
+    LANGUAGE plpgsql VOLATILE
+                     SECURITY DEFINER
+                     SET search_path = '';
+
+-- extra token usage
+CREATE OR REPLACE FUNCTION raid_season_extra_token(p_season_id INT DEFAULT NULL)
+    RETURNS TABLE
+            (
+                user_id   VARCHAR,
+                count     INT,
+                season_id INT
+            )
+AS
+$BODY$
+DECLARE
+    sid INT;
+BEGIN
+    IF p_season_id IS NOT NULL THEN
+        sid := p_season_id;
+    ELSE
+        sid := (SELECT s.id
+                FROM public.season s
+                ORDER BY season DESC
+                LIMIT 1);
+    END IF;
+
+    RETURN QUERY
+        SELECT m.user_id, e.count, sid as season_id
+        FROM public.extra_token_usage e,
+             public.member m
+        WHERE e.user_id = m.user_id
+          AND e.season_id = sid
+        UNION ALL
+        SELECT m.user_id, 0 AS count, sid as season_id
+        FROM public.member m
+        WHERE m.active IS TRUE
+          AND NOT EXISTS(SELECT e.id FROM public.extra_token_usage e WHERE m.user_id = e.user_id);
 END
 $BODY$
     LANGUAGE plpgsql VOLATILE

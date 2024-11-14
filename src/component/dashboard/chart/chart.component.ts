@@ -2,6 +2,7 @@ import {Component, inject, OnInit} from "@angular/core";
 import {SeasonService} from "../../../service";
 import {RaidSeasonData, SeasonInfoRounds, SeasonInfoTableColumns, SeasonInfoTableRow} from "../../../model";
 import {DEFAULT_CHART_OPTIONS, orderChartData} from "../../../util";
+import {combineLatestWith} from "rxjs";
 
 @Component({
     template: ""
@@ -18,6 +19,8 @@ export abstract class ChartComponent implements OnInit {
 
     rows?: SeasonInfoTableRow;
 
+    extraToken: Map<string, number> = new Map();
+
     chartData?: { labels: string[]; datasets: any[] };
 
     chartOptions?: any;
@@ -25,11 +28,17 @@ export abstract class ChartComponent implements OnInit {
     ngOnInit() {
         this.applyDefaultChartOptions();
 
-        this.seasonService.currentRaidSeasonData().subscribe(r => {
-            this.data = r;
-            this.tabs = r.tableData.rounds;
-            this.columns = r.tableData.columns;
-            this.rows = r.tableData.rows;
+        const raidSeasonData$ = this.seasonService.currentRaidSeasonData();
+        const extraToken$ = this.seasonService.getExtraTokenUsageMap();
+
+        raidSeasonData$.pipe(
+            combineLatestWith(extraToken$)
+        ).subscribe(([raidSeasonData, extraToken]) => {
+            this.data = raidSeasonData;
+            this.tabs = raidSeasonData.tableData.rounds;
+            this.columns = raidSeasonData.tableData.columns;
+            this.rows = raidSeasonData.tableData.rows;
+            this.extraToken = extraToken;
             this.onDataLoaded();
         });
     }

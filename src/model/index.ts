@@ -4,3 +4,4 @@ export * from './boss';
 export * from './raid-season';
 export * from './raid-season-table';
 export * from './season';
+export * from './extra-token-usage';
